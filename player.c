@@ -19,7 +19,7 @@ void _fire(void)
 
 	uint projectile_x = player_x;
 	uint projectile_y = player_y;
-	Direction projectile_direction = enemy_direction;
+	const Direction projectile_direction = enemy_direction;
 	direction_move(projectile_direction, &projectile_x, &projectile_y);
 	projectile_fire(projectile_x, projectile_y, projectile_direction);
 }

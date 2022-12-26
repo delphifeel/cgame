@@ -77,7 +77,7 @@ void enemies_get_closest_to_player_direction(Direction *direction)
 	*direction = _closest_direction;
 }
 
-void enemies_draw(uint current_frame)
+void enemies_process(uint current_frame)
 {
 	CORE_Assert(is_init == true);
 
@@ -145,7 +145,6 @@ void enemies_draw(uint current_frame)
 			_pos[i].x = iter_x;
 			_pos[i].y = iter_y;
 		}
-		mvprintw(iter_y, iter_x, "%c", ENEMY_SPRITE);
 	}
 
 	_closest_distance_x = distance_lowest_x;
@@ -156,5 +155,23 @@ void enemies_draw(uint current_frame)
 		_closest_direction = distance_lowest_x < 0 ? Direction_Left : Direction_Right;
 	} else {
 		_closest_direction = distance_lowest_y < 0 ? Direction_Top : Direction_Bottom;
+	}
+}
+
+void enemies_draw()
+{
+	CORE_Assert(is_init == true);
+	uint iter_x = 0;
+	uint iter_y = 0;
+	bool iter_dead = false;
+	for (uint i = 0; i < _count; i++) {
+		iter_x = _pos[i].x;
+		iter_y = _pos[i].y;
+		iter_dead = !_pos[i].is_active;
+		
+		if (iter_dead) {
+			continue;
+		}
+		mvprintw(iter_y, iter_x, "%c", ENEMY_SPRITE);
 	}
 }

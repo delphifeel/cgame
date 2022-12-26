@@ -12,12 +12,12 @@
 #define MAX_FRAMES 		(20)
 #define MILLIS_IN_FRAME 	(1000 / MAX_FRAMES)
 
-static uint current_frame = 1;
+static uint current_frame = 0;
 
 static void _init(void)
 {
-	player_init();
 	enemies_init();
+	player_init();
 }
 
 int main() {
@@ -34,10 +34,17 @@ int main() {
 	while (1) {
 		clear();
 
+		// processing
+		current_frame++;
+		if (current_frame == MAX_FRAMES - 1) {
+			current_frame = 1;
+		}
+		enemies_process(current_frame);
+
 		// drawing
 		win_draw();
+		enemies_draw();
 		player_draw();
-		enemies_draw(current_frame);
 		log_draw();
 
 		if (enemies_is_collided_with_player()) {
@@ -51,11 +58,6 @@ int main() {
 		refresh();
 		timeout(MILLIS_IN_FRAME);
 
-		// inc frames
-		current_frame++;
-		if (current_frame == MAX_FRAMES - 1) {
-			current_frame = 1;
-		}
 
 	}
 }
