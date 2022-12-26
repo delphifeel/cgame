@@ -14,8 +14,9 @@ typedef struct {
 } EnemiesPos;
 
 static const char ENEMY_SPRITE = '#';
-static const uint _at_least_this_far = 5;
+static const uint _at_least_this_far = 8;
 static const uint _count = 30;
+static const uint8 _miss_chance = 50;
 
 static bool is_init = false;
 static EnemiesPos _pos[_count];
@@ -23,6 +24,12 @@ static uint _dead_count = 0;
 static Direction _closest_direction = Direction_Top;
 static int _closest_distance_x = 0;
 static int _closest_distance_y = 0;
+
+static bool _projectile_missed(void) {
+	const uint8 miss_mod = 100 / _miss_chance;
+	const int random_number = rand();
+	return (random_number % miss_mod) == 0;
+}
 
 static bool _all_enemies_dead(void)
 {
@@ -114,12 +121,12 @@ void enemies_process(uint current_frame)
 		// is collision with projectile ?
 		if ( (proj_fired) && 
 		     (projectile_x == iter_x) &&
-		     (projectile_y == iter_y) )
+		     (projectile_y == iter_y) && 
+		     (!_projectile_missed()) )
 		{
 			// enemy dead
 			_pos[i].is_active = false;
 			_dead_count++;
-
 			projectile_reset();
 			continue;
 		}
