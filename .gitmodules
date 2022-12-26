@@ -1,0 +1,3 @@
+[submodule "libCCORE"]
+	path = libCCORE
+	url = https://github.com/delphifeel/libCCORE.git
