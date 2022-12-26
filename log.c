@@ -18,6 +18,6 @@ void log_draw(void)
 		return;
 	}
 
-	mvprintw(win_height + 1, 1, _log_buffer);
+	mvprintw(win_height + 1, 0, _log_buffer);
 }
 

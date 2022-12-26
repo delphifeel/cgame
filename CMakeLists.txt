@@ -1,7 +1,15 @@
 cmake_minimum_required(VERSION 3.10)
 project(cgame LANGUAGES C VERSION 0.0.0.1)
 
-add_compile_options(-DCORE_SET_DEBUG_COLORED)
+add_compile_options(
+	-DCORE_SET_DEBUG_COLORED
+	-fsanitize=address
+	-DASAN_OPTIONS=strict_string_checks=1:detect_stack_use_after_return=1:check_initialization_order=1:strict_init_order=1
+)
+add_link_options(
+	-fsanitize=address
+	-DASAN_OPTIONS=strict_string_checks=1:detect_stack_use_after_return=1:check_initialization_order=1:strict_init_order=1
+)
 
 set(LOCAL_COMPLILE_OPTIONS
 	-std=c99 -pedantic

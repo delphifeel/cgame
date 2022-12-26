@@ -27,7 +27,7 @@ int main() {
 	cbreak();
 	noecho();
 	keypad(stdscr, TRUE);
-	log_info("Press any key to start");
+	log_info("Press any key to start\nUse arrow keys for moving\nUse SPACE for fire");
 
 	_init();
 
@@ -39,6 +39,10 @@ int main() {
 		player_draw();
 		enemies_draw(current_frame);
 		log_draw();
+
+		if (enemies_is_collided_with_player()) {
+			_init();
+		}
 
 		// input
 		ch = getch();
@@ -53,8 +57,5 @@ int main() {
 			current_frame = 1;
 		}
 
-		if (enemies_is_collided_with_player()) {
-			_init();
-		}
 	}
 }

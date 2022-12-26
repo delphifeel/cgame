@@ -11,6 +11,23 @@ static uint _y = 0;
 static Direction _direction = Direction_Right;
 
 
+void projectile_reset(void)
+{
+	_is_fired = false;
+}
+
+bool projectile_is_fired(void)
+{
+	return _is_fired;
+}
+
+void projectile_get_pos(uint *x, uint *y)
+{
+	CORE_Assert(_is_fired);
+	*x = _x;
+	*y = _y;
+}
+
 void projectile_fire(uint start_x, uint start_y, Direction direction)
 {
 	if (!projectile_can_fire()) {

@@ -26,6 +26,7 @@ void _fire(void)
 
 void player_init(void)
 {
+	projectile_reset();
 	player_x = 1;
 	player_y = 1;
 }
